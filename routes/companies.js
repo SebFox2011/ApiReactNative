@@ -7,7 +7,14 @@ router.get('/', function(req, res, next) {
     const page = req.query.page || 1;
     const limit = 10;
     const skip = (page -1) * limit;
-    db.collection('compagnies').find().skip(skip).limit(limit).toArray(
+
+    let query = {};
+
+    if (req.query.search){ // teste si la recherche contient des mots, sans case sensitive
+        query.name = new RegExp(req.query.search,'i');
+    }
+
+    db.collection('compagnies').find(query).skip(skip).limit(limit).toArray(
         (err,companies) => res.json(companies));
 });
 
