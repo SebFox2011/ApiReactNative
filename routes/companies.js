@@ -4,10 +4,11 @@ var router = express.Router();
 /* GET /companies */
 router.get('/', function(req, res, next) {
     const {db} = req.app.locals;
-    db.collection('compagnies').find().skip(0).limit(10).toArray(
+    const page = req.query.page || 1;
+    const limit = 10;
+    const skip = (page -1) * limit;
+    db.collection('compagnies').find().skip(skip).limit(limit).toArray(
         (err,companies) => res.json(companies));
-
-    res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
