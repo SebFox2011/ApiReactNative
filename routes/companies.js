@@ -18,4 +18,9 @@ router.get('/', function(req, res, next) {
         (err,companies) => res.json(companies));
 });
 
+router.post('/',(req,res) =>{
+    const {db} = req.app.locals;
+    db.collection('compagnies').insertOne(req.body,(err,company) => res.json(company));
+});
+
 module.exports = router;
