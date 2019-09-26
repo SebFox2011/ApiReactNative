@@ -28,7 +28,9 @@ router.post('/',(req,res) =>{
 // Route pour supprimer une entrée
 router.delete('/:id',(req,res)=>{
     const {db} = req.app.locals;
-    db.collection('compagnies').deleteOne({ _id: new ObjectID(id) }, (err) => res.redirect('/'));
+    const {id} = req.params;
+    db.collection('compagnies').deleteOne({ _id: new ObjectID(id) },
+        (err, response) => res.json(response));
 });
 
 module.exports = router;
