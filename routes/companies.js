@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
+ObjectID = require('mongodb').ObjectID;
+
 
 /* GET /companies */
 router.get('/', function(req, res, next) {
     const {db} = req.app.locals;
     const page = req.query.page || 1;
     const limit = 10;
-    const skip = (page -1) * limit;
+    const skip = (page-1) * limit;
 
     let query = {};
 
@@ -21,6 +23,12 @@ router.get('/', function(req, res, next) {
 router.post('/',(req,res) =>{
     const {db} = req.app.locals;
     db.collection('compagnies').insertOne(req.body,(err,company) => res.json(company));
+});
+
+// Route pour supprimer une entrée
+router.delete('/:id',(req,res)=>{
+    const {db} = req.app.locals;
+    db.collection('compagnies').deleteOne({ _id: new ObjectID(id) }, (err) => res.redirect('/'));
 });
 
 module.exports = router;
