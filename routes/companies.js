@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
             .skip(skip)
             .limit(limit)
             .toArray(
-            (err,companies) => res.json({count:count,companies:companies}));
+            (err,companies) => res.json({count:count,limit:limit,companies:companies}));
     });
 
 });
