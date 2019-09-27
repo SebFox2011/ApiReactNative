@@ -15,9 +15,16 @@ router.get('/', function(req, res, next) {
     if (req.query.search){ // teste si la recherche contient des mots, sans case sensitive
         query.name = new RegExp(req.query.search,'i');
     }
+// MOdificaiton pour retourner le nombre de résultats avec les résultats
+    db.collection('compagnies').count((err,count) =>{
+        db.collection('compagnies')
+            .find(query)
+            .skip(skip)
+            .limit(limit)
+            .toArray(
+            (err,companies) => res.json({count:count,companies:companies}));
+    });
 
-    db.collection('compagnies').find(query).skip(skip).limit(limit).toArray(
-        (err,companies) => res.json(companies));
 });
 
 router.post('/',(req,res) =>{
