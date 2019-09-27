@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
         query.name = new RegExp(req.query.search,'i');
     }
 // MOdificaiton pour retourner le nombre de résultats avec les résultats
-    db.collection('compagnies').count((err,count) =>{
+    db.collection('compagnies').find(query).count((err,count) =>{
         db.collection('compagnies')
             .find(query)
             .skip(skip)
