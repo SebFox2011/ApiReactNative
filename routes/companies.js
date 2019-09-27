@@ -25,6 +25,14 @@ router.post('/',(req,res) =>{
     db.collection('compagnies').insertOne(req.body,(err,company) => res.json(company));
 });
 
+// Route pour modifier une entrée
+router.put('/:id',(req,res)=>{
+    const {db} = req.app.locals;
+    const {id} = req.params;
+    db.collection('compagnies').updateOne({ _id: new ObjectID(id) },{$set:req.body},
+        (err, response) => res.json(response));
+});
+
 // Route pour supprimer une entrée
 router.delete('/:id',(req,res)=>{
     const {db} = req.app.locals;
